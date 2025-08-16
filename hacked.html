@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>⚠️ SYSTEM HACKED ⚠️</title>
+<style>
+/* Body tetap full screen dan background tidak bisa digeser */
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    width: 100vw;
+    font-family: 'Courier New', monospace;
+    overflow: hidden; /* mencegah scroll */
+    color: #fff;
+    background: url('https://files.catbox.moe/vrxgyu.jpg') center center/cover no-repeat fixed; /* fixed background */
+    touch-action: none; /* mencegah geser di HP */
+    will-change: transform; /* paksa GPU rendering */
+}
+body::after {
+    content: "";
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(255, 0, 0, 0.25);
+    mix-blend-mode: overlay;
+    pointer-events: none;
+    animation: flash 0.3s infinite;
+    will-change: opacity;
+}
+@keyframes flash {0%,100%{opacity:0.2;}50%{opacity:0.7;}}
+
+.scanlines {
+    position: fixed;
+    inset: 0;
+    background-image: repeating-linear-gradient(to bottom, rgba(255,0,0,0.25) 0px, transparent 2px, transparent 4px);
+    animation: flicker 0.1s infinite;
+    pointer-events: none;
+    will-change: opacity;
+}
+@keyframes flicker {0%,100%{opacity:0.9;}50%{opacity:0.3;}}
+
+/* Judul, warning text, popup, tombol, footer sama seperti sebelumnya */
+.hacked-by {
+    position: absolute; top:12%; left:50%;
+    transform: translate(-50%,-50%);
+    font-size: 2.5em; font-weight: bold;
+    background: linear-gradient(90deg,#ff0000,#ff9900,#ffff00,#ff0000);
+    background-size: 400% 400%;
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    text-shadow:0 0 12px red,0 0 25px orange,0 0 40px yellow;
+    animation: hackedGlow 3s infinite linear, hackedMove 5s infinite ease-in-out;
+    z-index: 11;
+}
+@keyframes hackedGlow {0%{text-shadow:0 0 15px red,0 0 25px orange;}50%{text-shadow:0 0 40px yellow,0 0 50px red;}100%{text-shadow:0 0 15px red,0 0 25px orange;}}
+@keyframes hackedMove {0%,100%{transform:translate(-50%,-50%) scale(1);}50%{transform:translate(-50%,-50%) scale(1.1);}}
+
+.warning-text {
+    position:absolute; top:30%; left:50%;
+    transform:translate(-50%,-50%);
+    font-size:2em; font-weight:bold;
+    text-align:center; color:#ffcc00;
+    text-shadow:0 0 12px red,0 0 20px red,0 0 30px red;
+    animation: blink 0.7s infinite;
+    z-index: 10;
+}
+@keyframes blink {0%,100%{opacity:1;}50%{opacity:0.2;}}
+
+.popup {
+    position:absolute; width:220px; height:120px;
+    background:#000; border:2px solid #ff0000; color:lime;
+    font-size:14px; text-align:center; padding:10px;
+    opacity:0; animation: popupAnim 4s ease-out forwards;
+    box-shadow:0 0 12px red; z-index:5;
+}
+@keyframes popupAnim {0%{opacity:0;transform:scale(0.3) rotate(-25deg);}40%{opacity:0.7;transform:scale(0.6) rotate(-10deg);}70%{opacity:1;transform:scale(1.05) rotate(2deg);}100%{opacity:1;transform:scale(1) rotate(0deg);}}
+
+.exit-btn {
+    position:absolute; bottom:16%; left:50%; transform:translateX(-50%);
+    padding:14px 28px; font-size:1.2em; font-weight:bold;
+    color:white; background:linear-gradient(90deg,red,darkred);
+    border:none; border-radius:10px; box-shadow:0 0 15px red,0 0 30px darkred;
+    cursor:pointer; animation: shake 1.2s infinite; z-index:100;
+}
+@keyframes shake {0%,100%{transform:translateX(-50%) rotate(0deg);}25%{transform:translateX(-48%) rotate(-2deg);}75%{transform:translateX(-52%) rotate(2deg);}}
+
+.footer {
+    position:absolute; bottom:6%; left:50%; transform:translateX(-50%);
+    font-size:1.2em; color:#ff4444; text-shadow:0 0 8px black,0 0 20px red;
+    animation: blink 1s infinite; z-index:100;
+}
+
+.fake-alert {
+    position:fixed; top:50%; left:50%; transform:translate(-50%,-50%) scale(0.8);
+    background:rgba(0,0,0,0.95); border:2px solid red; color:#ff3333; padding:20px;
+    font-size:1.3em; font-weight:bold; text-align:center;
+    box-shadow:0 0 25px red,0 0 50px darkred; z-index:9999; opacity:0;
+    animation: showAlert 0.6s forwards, shakeBox 1s infinite;
+}
+@keyframes showAlert {from{opacity:0;transform:translate(-50%,-50%) scale(0.6);}to{opacity:1;transform:translate(-50%,-50%) scale(1);}}
+@keyframes shakeBox {0%,100%{transform:translate(-50%,-50%) rotate(0);}25%{transform:translate(-49%,-50%) rotate(-2deg);}75%{transform:translate(-51%,-50%) rotate(2deg);}}
+</style>
+</head>
+<body>
+
+<!-- Audio kedua otomatis saat masuk -->
+<audio id="enter-audio" loop>
+  <source src="https://files.catbox.moe/hacker-laugh.mp3" type="audio/mpeg">
+</audio>
+
+<!-- Audio utama -->
+<audio id="prank-audio" autoplay loop>
+  <source src="https://files.catbox.moe/9l8wd2.mp3" type="audio/mpeg">
+</audio>
+
+<div class="hacked-by">⚠️HACKED BY DITZZ4YOU⚠️</div>
+<div class="warning-text">⚠️ SYSTEM HACKED ⚠️<br>ALL FILES ARE CORRUPTED!</div>
+<div class="scanlines"></div>
+
+<button class="exit-btn" onclick="playPrank()">☣️ Klik di sini untuk keluar ☣️</button>
+<div class="footer">💀 SYSTEM HACKED – TEBUS KE DITZZ4YOU-OFFICIAL 💀</div>
+
+<script>
+const virusTexts = [
+    "YOU ARE AN IDIOT!",
+    "⚠️ VIRUS DETECTED",
+    "SYSTEM ERROR 404",
+    "ACCESS DENIED",
+    "MALWARE ACTIVE",
+    "FILES ENCRYPTED",
+    "🔥 TROJAN WARNING 🔥",
+    "💀 SPYWARE RUNNING"
+];
+
+// Membuat popup banyak tapi background tetap aman
+function createHeavyPopups() {
+    for(let i=0;i<20;i++){
+        let p = document.createElement("div");
+        p.className = "popup";
+        p.innerHTML = "<b>" + virusTexts[Math.floor(Math.random() * virusTexts.length)] + "</b><br>System32 Corrupted!";
+        p.style.top = Math.random() * (window.innerHeight - 150) + "px";
+        p.style.left = Math.random() * (window.innerWidth - 220) + "px";
+        document.body.appendChild(p);
+        setTimeout(() => { p.remove(); }, 8000);
+    }
+}
+setInterval(createHeavyPopups, 1000);
+
+const prankAudio = document.getElementById("prank-audio");
+const enterAudio = document.getElementById("enter-audio");
+
+// Memastikan audio kedua berjalan di HP/browser modern
+function startEnterAudio() {
+    const AudioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    const source = AudioCtx.createMediaElementSource(enterAudio);
+    source.connect(AudioCtx.destination);
+    enterAudio.volume = 1.0;
+    enterAudio.play().catch(()=>{});
+}
+document.addEventListener("DOMContentLoaded", startEnterAudio);
+document.addEventListener("click", startEnterAudio);
+document.addEventListener("touchstart", startEnterAudio);
+
+function playPrank() {
+    prankAudio.volume = 1.0;
+    prankAudio.play();
+
+    let alertBox = document.createElement("div");
+    alertBox.className = "fake-alert";
+    alertBox.innerHTML = "❌ Tidak bisa keluar!<br>💀 Sistem kamu sudah dikendalikan!";
+    document.body.appendChild(alertBox);
+
+    setTimeout(()=>{ alertBox.remove(); }, 5000);
+}
+</script>
+
+</body>
+</html>
